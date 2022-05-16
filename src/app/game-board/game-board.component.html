@@ -1,0 +1,25 @@
+<div class="game-board-container">
+  <div *ngFor="let categories of questions" class="category">
+    <h4 class="category-title">{{categories[0].category}}</h4>
+    <div *ngFor="let question of categories; index as i" class="question">
+      <button 
+        class="button-question"
+        [ngClass]="{'button-question--viewed': question.viewed}"
+        (click)="onQuestionClick(question, i)">
+        {{(i + 1) * 100}}
+      </button>
+    </div>
+  </div>
+</div>
+
+<div class="player-board">
+  <div 
+    *ngFor="let player of playersArray; index as i"
+    class="player-text"
+    [ngClass]="{'turn-player-text': player.isTurn}"
+    >
+    Player {{i + 1}} - {{player.score}}
+  </div>
+</div>
+
+
