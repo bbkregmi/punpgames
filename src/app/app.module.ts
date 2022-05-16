@@ -11,6 +11,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { TriviaService } from './trivia.service';
 import { GameBoardComponent } from './game-board/game-board.component';
 import { GameQuestionComponent } from './game-question/game-question.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { GameQuestionComponent } from './game-question/game-question.component';
     NewGameDialogComponent,
     GameBoardComponent,
     GameQuestionComponent,
+    HomeComponent,
   ],
   imports: [
     BrowserModule,
