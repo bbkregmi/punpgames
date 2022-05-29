@@ -12,6 +12,7 @@ import { TriviaService } from './trivia.service';
 import { GameBoardComponent } from './game-board/game-board.component';
 import { GameQuestionComponent } from './game-question/game-question.component';
 import { HomeComponent } from './home/home.component';
+import { Challenge24Component } from './challenge24/challenge24.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { HomeComponent } from './home/home.component';
     GameBoardComponent,
     GameQuestionComponent,
     HomeComponent,
+    Challenge24Component,
   ],
   imports: [
     BrowserModule,
