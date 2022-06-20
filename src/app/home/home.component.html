@@ -1,16 +1,16 @@
 <div class="app-container">
 
   <!-- <div>
-    Site in Progress! For now, Enjoy this awesome trivia game made with 
-    <a href="https://opentdb.com/">Open Trivia Database</a> API.
+    Site in Progress! For now, Enjoy this awesome punpgames game made with 
+    <a href="https://opentdb.com/">Open PunpGames Database</a> API.
   </div>
-  <button class="button-primary" routerLink="trivia">Check Out Trivia</button>
+  <button class="button-primary" routerLink="punpgames">Check Out PunpGames</button>
 
   <div style="margin-top: 40px;">
     We also have sets of challenge 24 questions for you to try!
   </div>
   <button class="button-primary" routerLink="challenge24">Challenge 24</button> -->
-  <app-login *ngIf="!user; else userDashboard" (loggedIn)="onLoggedIn($event)"></app-login>
+  <app-auth-container *ngIf="!user; else userDashboard" (loggedIn)="onLoggedIn($event)"></app-auth-container>
 
   <ng-template #userDashboard>
     <app-user-dashboard [user]="user" (signout)="onSignout()"></app-user-dashboard>

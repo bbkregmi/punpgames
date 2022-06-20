@@ -22,7 +22,7 @@ export class HomeComponent {
       if (!snapshot.exists()) {
         return;
       }
-      console.log(this);
+
       this.user = snapshot.val();
     });
   }

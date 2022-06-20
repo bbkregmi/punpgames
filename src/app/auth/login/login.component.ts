@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, UserCredential, User } from "firebase/auth";
 import {FormControl, Validators} from '@angular/forms';
-import { UserService } from 'src/app/async/users';
+import { FirebaseError } from 'firebase/app';
 
 
 @Component({
@@ -15,43 +15,23 @@ export class LoginComponent {
   passwordFormControl = new FormControl('',  [Validators.required]);
 
   @Output() loggedIn = new EventEmitter();
-
-  constructor(
-    private userService: UserService
-  ) {}
+  @Output() signupClicked = new EventEmitter();
 
   login(email: string, password: string) {
     const auth = getAuth();
     signInWithEmailAndPassword(auth, email, password).then(userCreds => {
       this.loggedIn.emit(userCreds);
-    }).catch(error => {
-      console.error(error);
+    }).catch((error: FirebaseError) => {
+      if (error.code === 'auth/user-not-found') {
+        this.emailFormControl.setErrors({userNotFound: true});
+      }
+      if (error.code === 'auth/wrong-password') {
+        this.passwordFormControl.setErrors({wrongpassword: true});
+      }
     });
   }
 
-  signup(email: string, password: string) {
-    const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password).then(userCreds => {
-      const user = userCreds.user;
-      this.addUser(user)
-      console.log(user);
-    }).catch(error => {
-      console.log(error);
-    })
-  }
-
-  private addUser(user: User) {
-    this.userService.createUser(
-      {
-        uid: user.uid,
-        email: user.email,
-        displayName: 'Bibek Regmi',
-      }
-    ).then(() => {
-      console.log('User Created');
-      this.loggedIn.emit(user);
-    }).catch(err => {
-      console.log('error', err);
-    })
+  onSignup() {
+    this.signupClicked.emit();
   }
 }

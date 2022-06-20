@@ -1,6 +1,14 @@
-import { Component } from '@angular/core';
-import { FormControl, Validators } from '@angular/forms';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { Component, EventEmitter, Output } from '@angular/core';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { FirebaseError } from 'firebase/app';
+import { getAuth, createUserWithEmailAndPassword, User, UserCredential } from "firebase/auth";
+import { UserService } from 'src/app/async/users';
+
+export const passwordMatchingValidatior: ValidatorFn = (confirmPassword: AbstractControl): ValidationErrors | null => {
+  const password = confirmPassword.parent?.get('password');
+  const matchedError = password?.value === confirmPassword?.value ? null : { notmatched: {value: true} };
+  return matchedError;
+};
 
 @Component({
   selector: 'app-sign-up',
@@ -8,20 +16,56 @@ import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
   styleUrls: ['./sign-up.component.scss']
 })
 export class SignUpComponent {
-  emailFormControl = new FormControl('', [Validators.required, Validators.email]);
-  passwordFormControl = new FormControl('',  [Validators.required]);
+  registrationFormGroup = new FormGroup(
+    {
+      email: new FormControl('', [Validators.required, Validators.email]),
+      displayName: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
+      confirmPassword: new FormControl('', [Validators.required, passwordMatchingValidatior])
+    }
+  );
 
 
-  constructor() { }
+  @Output() signedUp = new EventEmitter<UserCredential>();
+  @Output() cancelClicked = new EventEmitter();
 
-  signup(email: string, password: string) {
+  constructor(
+    private userService: UserService
+  ) { }
+
+  signup() {
+    if (this.registrationFormGroup.invalid) {
+      return;
+    }
+
+    const email = this.registrationFormGroup.get('email')?.value;
+    const password = this.registrationFormGroup.get('password')?.value;
+
     const auth = getAuth();
     createUserWithEmailAndPassword(auth, email, password).then(userCreds => {
-      const user = userCreds.user;
-      console.log(user);
-    }).catch(error => {
-      console.log(error);
+      this.addUser(userCreds)
+    }).catch((error: FirebaseError) => {
+      if (error.code === 'auth/email-already-in-use') {
+        this.registrationFormGroup.get('email')?.setErrors({alreadyExists: true})
+      }
+      if (error.code === 'auth/weak-password') {
+        this.registrationFormGroup.get('password')?.setErrors({weakPassword: true})
+      }
     })
+  }
+
+  cancel() {
+    this.cancelClicked.emit();
+  }
+
+  private addUser(userCreds: UserCredential) {
+    this.userService.createUser({
+      uid: userCreds.user.uid,
+      email: this.registrationFormGroup.get('email')?.value,
+      displayName: this.registrationFormGroup.get('displayName')?.value,
+    }).then(() => {
+      this.signedUp.emit(userCreds);
+    });
   }
 
 }
