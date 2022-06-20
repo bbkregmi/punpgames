@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppComponent } from './app.component';
@@ -13,6 +13,9 @@ import { GameBoardComponent } from './game-board/game-board.component';
 import { GameQuestionComponent } from './game-question/game-question.component';
 import { HomeComponent } from './home/home.component';
 import { Challenge24Component } from './challenge24/challenge24.component';
+import { LoginComponent } from './auth/login/login.component';
+import { SignUpComponent } from './auth/sign-up/sign-up.component';
+import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { Challenge24Component } from './challenge24/challenge24.component';
     GameQuestionComponent,
     HomeComponent,
     Challenge24Component,
+    LoginComponent,
+    SignUpComponent,
+    UserDashboardComponent,
   ],
   imports: [
     BrowserModule,
@@ -30,6 +36,7 @@ import { Challenge24Component } from './challenge24/challenge24.component';
     AppMaterialModule,
     AppRoutingModule,
     ReactiveFormsModule,
+    FormsModule,
     HttpClientModule,
   ],
   providers: [

@@ -5,6 +5,7 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
+import { getDatabase } from 'firebase/database';
 
 if (environment.production) {
   enableProdMode();
@@ -17,10 +18,12 @@ const firebaseConfig = {
   storageBucket: "punpgames-cda3a.appspot.com",
   messagingSenderId: "329829424402",
   appId: "1:329829424402:web:550373898f10fcef71a7cb",
-  measurementId: "G-T9ZMKYVETH"
+  measurementId: "G-T9ZMKYVETH",
+  databaseURL: "https://punpgames-cda3a-default-rtdb.firebaseio.com",
 };
 
 const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
 const analytics = getAnalytics(app);
 
 platformBrowserDynamic().bootstrapModule(AppModule)

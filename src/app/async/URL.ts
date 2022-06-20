@@ -1,0 +1,1 @@
+export const DATABASE_URL = 'https://punpgames-cda3a-default-rtdb.firebaseio.com';

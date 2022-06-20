@@ -1,7 +1,6 @@
 <div class="app-container">
-  <h1>Welcome to PUNP Games!</h1>
 
-  <div>
+  <!-- <div>
     Site in Progress! For now, Enjoy this awesome trivia game made with 
     <a href="https://opentdb.com/">Open Trivia Database</a> API.
   </div>
@@ -10,6 +9,10 @@
   <div style="margin-top: 40px;">
     We also have sets of challenge 24 questions for you to try!
   </div>
-  <button class="button-primary" routerLink="challenge24">Challenge 24</button>
+  <button class="button-primary" routerLink="challenge24">Challenge 24</button> -->
+  <app-login *ngIf="!user; else userDashboard" (loggedIn)="onLoggedIn($event)"></app-login>
 
+  <ng-template #userDashboard>
+    <app-user-dashboard [user]="user" (signout)="onSignout()"></app-user-dashboard>
+  </ng-template>
 </div>
