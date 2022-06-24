@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, Input} from '@angular/core';
 import { getAuth, signOut } from 'firebase/auth';
 
 @Component({
@@ -6,15 +6,9 @@ import { getAuth, signOut } from 'firebase/auth';
   templateUrl: './user-dashboard.component.html',
   styleUrls: ['./user-dashboard.component.scss']
 })
-export class UserDashboardComponent implements OnInit {
+export class UserDashboardComponent {
 
   @Input() user: any;
-  
-  constructor() { }
-
-  ngOnInit(): void {
-    console.log(this.user)
-  }
 
   onSignout() {
     signOut(getAuth());

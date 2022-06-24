@@ -16,10 +16,8 @@ export class AuthService {
     onAuthStateChanged(auth, (user) => {
       this._currentUserSubject.next(user);
       if (user) {
-        console.log('User Signed In');
         this.router.navigate(['home']);
       } else {
-        console.log('User Signed Out');
         this.router.navigate(['']);
       }
     })
