@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, UserCredential, User } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import {FormControl, Validators} from '@angular/forms';
 import { FirebaseError } from 'firebase/app';
 
@@ -14,14 +14,11 @@ export class LoginComponent {
   emailFormControl = new FormControl('', [Validators.required, Validators.email]);
   passwordFormControl = new FormControl('',  [Validators.required]);
 
-  @Output() loggedIn = new EventEmitter();
   @Output() signupClicked = new EventEmitter();
 
   login(email: string, password: string) {
     const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password).then(userCreds => {
-      this.loggedIn.emit(userCreds);
-    }).catch((error: FirebaseError) => {
+    signInWithEmailAndPassword(auth, email, password).catch((error: FirebaseError) => {
       if (error.code === 'auth/user-not-found') {
         this.emailFormControl.setErrors({userNotFound: true});
       }

@@ -1,8 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 import { FirebaseError } from 'firebase/app';
-import { getAuth, createUserWithEmailAndPassword, User, UserCredential } from "firebase/auth";
-import { UserService } from 'src/app/async/users';
+import { getAuth, createUserWithEmailAndPassword, User, UserCredential, updateProfile, Auth } from "firebase/auth";
 
 export const passwordMatchingValidatior: ValidatorFn = (confirmPassword: AbstractControl): ValidationErrors | null => {
   const password = confirmPassword.parent?.get('password');
@@ -29,10 +28,6 @@ export class SignUpComponent {
   @Output() signedUp = new EventEmitter<UserCredential>();
   @Output() cancelClicked = new EventEmitter();
 
-  constructor(
-    private userService: UserService
-  ) { }
-
   signup() {
     if (this.registrationFormGroup.invalid) {
       return;
@@ -42,8 +37,8 @@ export class SignUpComponent {
     const password = this.registrationFormGroup.get('password')?.value;
 
     const auth = getAuth();
-    createUserWithEmailAndPassword(auth, email, password).then(userCreds => {
-      this.addUser(userCreds)
+    createUserWithEmailAndPassword(auth, email, password).then(() => {
+      this.addUser(auth).then(() => this.signedUp.emit());
     }).catch((error: FirebaseError) => {
       if (error.code === 'auth/email-already-in-use') {
         this.registrationFormGroup.get('email')?.setErrors({alreadyExists: true})
@@ -58,13 +53,9 @@ export class SignUpComponent {
     this.cancelClicked.emit();
   }
 
-  private addUser(userCreds: UserCredential) {
-    this.userService.createUser({
-      uid: userCreds.user.uid,
-      email: this.registrationFormGroup.get('email')?.value,
+  private addUser(auth: Auth) {
+    return updateProfile(auth.currentUser!, {
       displayName: this.registrationFormGroup.get('displayName')?.value,
-    }).then(() => {
-      this.signedUp.emit(userCreds);
     });
   }
 

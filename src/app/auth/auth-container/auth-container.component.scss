@@ -1,5 +1,9 @@
 .auth-container {
   text-align: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(to right, white 50%, black 50%);
 }
 
 .auth-logo {

@@ -1,18 +1,45 @@
-<div class="app-container">
+<!-- <div *ngIf="user" class="app-container">
+  <app-user-dashboard [user]="user"></app-user-dashboard>
+</div> -->
 
-  <!-- <div>
-    Site in Progress! For now, Enjoy this awesome punpgames game made with 
-    <a href="https://opentdb.com/">Open PunpGames Database</a> API.
-  </div>
-  <button class="button-primary" routerLink="punpgames">Check Out PunpGames</button>
+<!-- <mat-toolbar>
+  <mat-toolbar-row>
+    <img src="assets/images/punpgames.jpg" width="48" height="48" style="border-radius: 50%;">
 
-  <div style="margin-top: 40px;">
-    We also have sets of challenge 24 questions for you to try!
-  </div>
-  <button class="button-primary" routerLink="challenge24">Challenge 24</button> -->
-  <app-auth-container *ngIf="!user; else userDashboard" (loggedIn)="onLoggedIn($event)"></app-auth-container>
+    <button mat-icon-button>
+      <mat-icon (click)="sidenav.toggle()">menu</mat-icon>
+    </button>
+    <span class="menu-spacer"></span>
+    <div>
+      <a mat-button [routerLink]="'/accounts'"> Accounts </a>
+      <a mat-button [routerLink]="'/create-account'"> Create Account </a>
+      <a mat-button [routerLink]="'/contacts'"> Contacts </a>
+      <a mat-button [routerLink]="'/create-contact'"> Create Contact </a>
+      <a mat-button [routerLink]="'/activities'"> Activities </a>
+      <a mat-button [routerLink]="'/create-activity'"> Create Activity </a>
 
-  <ng-template #userDashboard>
-    <app-user-dashboard [user]="user" (signout)="onSignout()"></app-user-dashboard>
-  </ng-template>
-</div>
+    </div>
+  </mat-toolbar-row>
+</mat-toolbar> -->
+
+<mat-sidenav-container [hasBackdrop]="false">
+  <mat-sidenav #sidenav opened mode="side">
+    <img src="assets/images/punpgames.jpg" width="66" height="66" style="border-radius: 50%; margin-top:1rem">
+    <mat-nav-list>
+      <a mat-list-item> Work In Progress </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <div class="top-nav">
+      <button mat-icon-button aria-label="Account circle icon">
+        <mat-icon>account_circle</mat-icon>
+      </button>
+    </div>
+    <div class="main-content">
+      <div *ngIf="user" class="app-container">
+        <app-user-dashboard [user]="user"></app-user-dashboard>
+      </div>
+    </div>
+  </mat-sidenav-content>
+
+</mat-sidenav-container>

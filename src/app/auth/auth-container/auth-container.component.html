@@ -1,12 +1,14 @@
 <div class="auth-container">
-  <img class="auth-logo" src="assets/images/punpgames.jpg">
-  <div class="auth-box">
-    <ng-container *ngIf="mode == 'signin'; else signup">
-      <app-login (loggedIn)="onLoggedInSuccess($event)" (signupClicked)="mode = 'signup'"></app-login>
-    </ng-container>
-    
-    <ng-template #signup>
-      <app-sign-up (cancelClicked)="mode = 'signin'" (signedUp)="onSignupSuccess($event)"></app-sign-up>
-    </ng-template>
+  <div>
+    <img class="auth-logo" src="assets/images/punpgames.jpg">
+    <div class="auth-box">
+      <ng-container *ngIf="mode == 'signin'; else signup">
+        <app-login (signupClicked)="mode = 'signup'"></app-login>
+      </ng-container>
+      
+      <ng-template #signup>
+        <app-sign-up (cancelClicked)="mode = 'signin'" (signedUp)="onSignupSuccess()"></app-sign-up>
+      </ng-template>
+    </div>
   </div>
 </div>

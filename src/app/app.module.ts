@@ -11,6 +11,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { SignUpComponent } from './auth/sign-up/sign-up.component';
 import { UserDashboardComponent } from './user-dashboard/user-dashboard.component';
 import { AuthContainerComponent } from './auth/auth-container/auth-container.component';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,9 @@ import { AuthContainerComponent } from './auth/auth-container/auth-container.com
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
+  ],
+  providers: [
+    AuthService
   ],
   bootstrap: [AppComponent],
 })

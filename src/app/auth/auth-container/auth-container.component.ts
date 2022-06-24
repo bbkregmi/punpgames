@@ -1,10 +1,13 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { Router } from '@angular/router';
 import { UserCredential } from 'firebase/auth';
+import { take } from 'rxjs';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-auth-container',
   templateUrl: './auth-container.component.html',
-  styleUrls: ['./auth-container.component.scss']
+  styleUrls: ['./auth-container.component.scss'],
 })
 export class AuthContainerComponent {
 
@@ -12,13 +15,20 @@ export class AuthContainerComponent {
 
   @Output() loggedIn = new EventEmitter<UserCredential>();
 
-  constructor() { }
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) { }
 
-  onLoggedInSuccess(userCredentials: UserCredential) {
-    this.loggedIn.emit(userCredentials);
+  ngOnInit() {
+    this.authService.getUser().pipe(take(1)).subscribe(user => {
+      if (user) {
+        this.router.navigate(['home']);
+      }
+    })
   }
 
-  onSignupSuccess(userCredentials: UserCredential) {
-    this.loggedIn.emit(userCredentials);
+  onSignupSuccess() {
+    this.router.navigate(['home']);
   }
 }

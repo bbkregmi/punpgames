@@ -1,33 +1,22 @@
-import { Component } from '@angular/core';
-import { UserCredential } from 'firebase/auth';
-import { DataSnapshot } from 'firebase/database';
-import { UserService } from '../async/users';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
 
   user: any;
 
   constructor(
-    private userService: UserService
+    private authService: AuthService,
   ) { }
 
-  onLoggedIn(userCreds: UserCredential) {
-    
-    this.userService.getUser(userCreds.user.uid, (snapshot: DataSnapshot) => {
-      if (!snapshot.exists()) {
-        return;
-      }
-
-      this.user = snapshot.val();
+  ngOnInit(): void {
+    this.authService.getUser().subscribe(user => {
+      this.user = user;
     });
-  }
-
-  onSignout() {
-    this.user = null;
   }
 }

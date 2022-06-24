@@ -6,6 +6,7 @@ import { environment } from './environments/environment';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getDatabase } from 'firebase/database';
+import { getAuth, setPersistence, browserSessionPersistence } from "firebase/auth";
 
 if (environment.production) {
   enableProdMode();
@@ -25,6 +26,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 const analytics = getAnalytics(app);
+
+const auth = getAuth();
+setPersistence(auth, browserSessionPersistence);
 
 platformBrowserDynamic().bootstrapModule(AppModule)
   .catch(err => console.error(err));

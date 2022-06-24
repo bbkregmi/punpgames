@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { getAuth, signOut } from 'firebase/auth';
 
 @Component({
   selector: 'app-user-dashboard',
@@ -8,15 +9,14 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class UserDashboardComponent implements OnInit {
 
   @Input() user: any;
-
-  @Output() signout = new EventEmitter();
   
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.user)
   }
 
   onSignout() {
-    this.signout.emit();
+    signOut(getAuth());
   }
 }
