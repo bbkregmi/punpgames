@@ -1,0 +1,123 @@
+.chat-main {
+  display: table;
+  width: 100%;
+  height: 100%;
+  -moz-box-shadow: 0 0 3px #ccc;
+  -webkit-box-shadow: 0 0 3px #ccc;
+  box-shadow: 0 0 3px #ccc;
+}
+
+.chat-nav {
+  display: table-cell;
+  width: 15%;
+  min-width: 3rem;
+  vertical-align: top;
+  -moz-box-shadow: 0 0 3px rgb(65, 61, 61);
+  -webkit-box-shadow: 0 0 3px rgb(65, 61, 61);
+  box-shadow: 0 0 3px rgb(65, 61, 61);
+  text-align: center;
+  padding-top: 0.25rem;
+  padding-bottom: 0.25rem;
+}
+
+.chat-nav-header {
+  display: flex;
+}
+
+.chat-content {
+  display: table-cell;
+  width: 85%;
+  vertical-align: top;
+  height: 93vh;
+}
+
+.chat-content-scrollable {
+  position: relative;
+  height: 100%;
+  overflow: scroll;
+  padding: 1rem 1rem 0.25rem 1rem;
+}
+
+.chat-input-container {
+  bottom: 0;
+  -moz-box-shadow: 0 0 3px rgb(119, 118, 118);
+  -webkit-box-shadow: 0 0 3px rgb(119, 118, 118);
+  box-shadow: 0 0 3px rgb(119, 118, 118);
+  padding: 1rem;
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  background-color: white;
+}
+
+.chat-group-list-item {
+  border-radius: 0%;
+  font-size: larger;
+}
+
+.chat-start-group {
+  color: #0ed592;
+}
+
+.chat-input {
+  padding: 0.5rem;
+  border-radius: 1rem;
+  width: -webkit-fill-available;
+}
+
+.chat-message-content {
+  padding: 0.35rem;
+  border-radius: 4px;
+  -moz-box-shadow: 0 0 3px rgb(119, 118, 118);
+  -webkit-box-shadow: 0 0 3px rgb(119, 118, 118);
+  box-shadow: 0 0 3px rgb(119, 118, 118);
+  width: fit-content;
+  display: block;
+  max-width: 560px;
+  word-break: break-word;
+}
+
+.chat-self-message-content {
+  @extend .chat-message-content;
+  background: #1dfff58c;
+}
+
+.chat-other-message-content {
+  @extend .chat-message-content;
+  background-color: #bfaeae70;
+}
+
+.chat-other-message-name {
+  display: block;
+  font-weight: bold;
+  font-size: large;
+}
+
+.chat-message-container {
+  margin-top: 5px;
+  margin-bottom: 5px;
+  display: flow-root;
+}
+
+
+.chat-self-message {
+  float: right;
+}
+
+.chat-content-title-container {
+  @extend .chat-input-container;
+  top: 0;
+  bottom: unset;
+}
+
+.chat-messages-container {
+  background-color: white;
+  min-height: 4rem;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.chat-no-mesages {
+  text-align: center;
+  margin-top: 1rem;
+  font-style: italic;
+}

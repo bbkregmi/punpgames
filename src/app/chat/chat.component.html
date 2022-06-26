@@ -1,0 +1,58 @@
+<div class="chat-main">
+  <div class="chat-nav">
+    <input #userSearchInput class="chat-input" placeholder="Search" aria-label="Search for users" 
+      (focus)="onSearchUserFocus()" (blur)="onSearchUserBlur()" (input)="onUserSearchInput($event)">
+    
+    <div *ngIf="sidenavMode === 'userSearch'; else groupList">
+      <span *ngIf="!userSearchInput.value.length && !searchedUser?.length">Please enter user id</span>
+      <span *ngIf="userSearchInput.value.length && !searchedUser?.length">No User Found</span>
+      <div *ngIf="searchedUser?.length">
+        <mat-nav-list>
+          <button mat-list-item *ngFor="let user of searchedUser;" class="chat-group-list-item" (click)="onSearchUserClicked(user)"> 
+            {{user.data()['displayName']}}
+            <mat-icon class="chat-start-group">arrow_right</mat-icon>
+          </button>
+        </mat-nav-list>
+      </div>
+    </div>
+    <ng-template #groupList>
+      <mat-nav-list>
+        <button mat-list-item *ngFor="let snapshot of chatGroups" class="chat-group-list-item" (click)="onGroupClicked(snapshot)">
+          {{snapshot.data()['members'][0]['displayName']}}
+        </button>
+      </mat-nav-list>
+    </ng-template>
+  </div>
+  <div class="chat-content">
+    <div *ngIf="displayedChatGroup; else noChatGroups" class="chat-content-scrollable">
+      <div class="chat-content-title-container">
+        {{displayedChatGroup?.data()?.title}}
+      </div>
+      <div class="chat-messages-container">
+        <div *ngIf="!currentGroupMessages || !currentGroupMessages.length" class="chat-no-mesages">Send a message!</div>
+        <div *ngFor="let chatMessage of currentGroupMessages; index as i" class="chat-message-container">
+          <div *ngIf="chatMessage['userId'] === userData['uid']" class="chat-self-message">
+            <span *ngIf="i == 0 || currentGroupMessages[i - 1].userId != chatMessage['userId']" class="chat-self-message-name">You</span>
+            <span class="chat-self-message-content">
+              {{chatMessage.message}}
+            </span>
+          </div>
+          <div *ngIf="chatMessage['userId'] != userData['uid']" class="chat-other-message">
+            <span *ngIf="i == 0 || currentGroupMessages[i - 1].userId != chatMessage['userId']" class="chat-other-message-name">{{chatMessage.userName}}</span>
+            <span class="chat-other-message-content">
+              {{chatMessage.message}}
+            </span>
+          </div>
+        </div>
+      </div>
+
+      <div class="chat-input-container">
+        <input class="chat-input" #chatMessageInput placeholder="Send a message..." aria-label="Send a message" (keyup.enter)="sendMessage(chatMessageInput)">
+      </div>
+    </div>
+
+    <ng-template #noChatGroups>
+      No Chat Group Available! Start talking to people :)
+    </ng-template>
+  </div>
+</div>

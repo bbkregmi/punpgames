@@ -1,0 +1,50 @@
+mat-sidenav {
+  text-align: center;
+  min-width: 8rem;
+  background-color: black;
+}
+
+.sidebar-logo {
+  width: 66px;
+  height: 66px;
+  border-radius: 50%;
+  margin-top:1rem;
+  cursor: pointer;
+}
+
+.sidebar-logo:hover {
+  transform: scale(1.1);
+}
+
+mat-sidenav-container {
+  height: 100%;
+}
+
+mat-sidenav-content {
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+}
+
+.side-nav-item {
+  background: transparent;
+  color: white;
+  font-weight: bold;
+  font-size: 16px;
+  mix-blend-mode: difference;
+  display: flex;
+  align-items: center;
+
+  mat-icon {
+    margin-left: 10px;
+  }
+}
+
+.side-nav-item:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.top-nav {
+  display: flex;
+  flex-direction: row-reverse;
+  padding-top: 0.5rem;
+}

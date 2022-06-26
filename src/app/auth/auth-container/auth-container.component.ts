@@ -22,13 +22,13 @@ export class AuthContainerComponent {
 
   ngOnInit() {
     this.authService.getUser().pipe(take(1)).subscribe(user => {
-      if (user) {
-        this.router.navigate(['home']);
+      if (user && user.emailVerified) {
+        this.router.navigate(['']);
       }
     })
   }
 
   onSignupSuccess() {
-    this.router.navigate(['home']);
+    this.mode = 'signin';
   }
 }

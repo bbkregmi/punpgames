@@ -5,8 +5,8 @@ import { AppModule } from './app/app.module';
 import { environment } from './environments/environment';
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { getDatabase } from 'firebase/database';
 import { getAuth, setPersistence, browserSessionPersistence } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 if (environment.production) {
   enableProdMode();
@@ -24,7 +24,7 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-const database = getDatabase(app);
+const db = getFirestore(app);
 const analytics = getAnalytics(app);
 
 const auth = getAuth();

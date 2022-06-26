@@ -15,8 +15,9 @@ export class AuthService {
     const auth = getAuth();
     onAuthStateChanged(auth, (user) => {
       this._currentUserSubject.next(user);
-      if (user) {
-        this.router.navigate(['home']);
+
+      if (!user || !user.emailVerified) {
+        this.router.navigate(['login']);
       } else {
         this.router.navigate(['']);
       }

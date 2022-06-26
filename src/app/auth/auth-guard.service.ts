@@ -18,7 +18,7 @@ export class CanActivateAuth implements CanActivate {
   ): boolean | UrlTree | Observable<boolean | UrlTree> | Promise<boolean | UrlTree> {
     return this.authService.getUser().pipe(
       map(user => {
-        return user != null;
+        return user != null && user.emailVerified;
       })
     );
   }

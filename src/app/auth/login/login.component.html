@@ -1,4 +1,11 @@
 <h1>Login</h1>
+
+<div *ngIf="displayVerifyEmailError" class="email-verification-error">
+  <mat-error *ngIf="!emailVerificationSent">Please verify your email.</mat-error>
+  <button *ngIf="!emailVerificationSent" mat-button (click)="onVerificationLinkResend()">Resend Link</button>
+  <span *ngIf="emailVerificationSent">Email Sent! Please also check spam folder if you do not see it in your inbox</span>
+</div>
+
 <form>
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Email</mat-label>
