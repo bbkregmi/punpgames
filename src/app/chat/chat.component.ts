@@ -72,21 +72,26 @@ export class ChatComponent implements OnInit, OnDestroy {
   }
 
   onSearchUserClicked(user: any) {
+    this.userSearchInput.nativeElement.value = '';
+
     const newGroupmembers = this.removeDuplicates([user, this.dbUser], 'id');
+    const newGroupMembersUid = newGroupmembers.map(member => member.data().uid);
     if (newGroupmembers.length < 2) return;
+  
     const existingGroupsWithMembers = this.chatGroups.filter(group => {
-      return group.data().members.every((member: any) => newGroupmembers.includes(member));
+      const groupMembers: any[] = group.data().members;
+      if (newGroupMembersUid.length != groupMembers.length) return false;
+      return groupMembers.every(groupMember => newGroupMembersUid.includes(groupMember.uid));
     });
 
     if (existingGroupsWithMembers.length) {
+      this.displayedChatGroup = existingGroupsWithMembers[0];
       return;
     }
 
     this.chatService.createChatGroupForUser(newGroupmembers).then(() => {
       this.fetchUser();
     });
-
-    this.userSearchInput.nativeElement.value = '';
   }
 
   sendMessage(messageInput: HTMLInputElement) {
@@ -105,11 +110,15 @@ export class ChatComponent implements OnInit, OnDestroy {
     this.displayedChatGroup = group;
   }
 
+  getTitle(snapshot: QueryDocumentSnapshot<DocumentData>) {
+    return (snapshot.data()['members'] as any[]).find(member => member.uid != this.userData.uid).displayName;
+  }
+
   private removeDuplicates(myArr: any[], prop: string) {
     return myArr.filter((obj, pos, arr) => {
         return arr.map(mapObj => mapObj[prop]).indexOf(obj[prop]) === pos
     })
-}
+  }
 
   private fetchUser() {
     this.userService.getCurrentUser().then(user => {

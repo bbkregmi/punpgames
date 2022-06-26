@@ -18,7 +18,7 @@
     <ng-template #groupList>
       <mat-nav-list>
         <button mat-list-item *ngFor="let snapshot of chatGroups" class="chat-group-list-item" (click)="onGroupClicked(snapshot)">
-          {{snapshot.data()['members'][0]['displayName']}}
+          {{getTitle(snapshot)}}
         </button>
       </mat-nav-list>
     </ng-template>
@@ -48,6 +48,9 @@
 
       <div class="chat-input-container">
         <input class="chat-input" #chatMessageInput placeholder="Send a message..." aria-label="Send a message" (keyup.enter)="sendMessage(chatMessageInput)">
+        <button mat-icon-button aria-label="Send Message" (click)="sendMessage(chatMessageInput)">
+          <mat-icon>send</mat-icon>
+        </button>
       </div>
     </div>
 

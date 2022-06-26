@@ -27,7 +27,6 @@ export class ChatService {
     const users = usersDocumentData.map(userDocumentData => userDocumentData.data());
 
     const groupDocRef = await addDoc(collection(this.db, "chatgroups"), {
-      title: users[0]['displayName'],
       members: users,
       messages: []
     });
