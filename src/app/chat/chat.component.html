@@ -26,7 +26,7 @@
   <div class="chat-content">
     <div *ngIf="displayedChatGroup; else noChatGroups" class="chat-content-scrollable">
       <div class="chat-content-title-container">
-        {{displayedChatGroup?.data()?.title}}
+        {{getTitle(displayedChatGroup)}}
       </div>
       <div class="chat-messages-container">
         <div *ngIf="!currentGroupMessages || !currentGroupMessages.length" class="chat-no-mesages">Send a message!</div>
